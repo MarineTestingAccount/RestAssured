@@ -1,8 +1,7 @@
 package tests;
 
 import api.Specifications;
-import helpers.ConnectToDB;
-import helpers.RandomValues;
+import helpers.*;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
@@ -21,8 +20,14 @@ public class gorestTests {
     private final static String URL = "https://gorest.co.in";
     private final static String token = "a9e5f1e7c2b7ddc3308af58fa9c251e2fb38809ee71d26e37b780419acae502e";
     protected String userId = "";
+
     RandomValues randomValues = new RandomValues();
     ConnectToDB db = new ConnectToDB();
+    InitSQLServer initSQLServer = new InitSQLServer();
+
+    CreateDatabaseDemo crtDb = new CreateDatabaseDemo();
+    DB dbb = new DB();
+
     protected String randName = randomValues.randomName();
     protected String randGender = randomValues.randomGender();
     protected String randEmail = randomValues.randomEmail();
@@ -161,7 +166,11 @@ public class gorestTests {
     }
 
     @Test
-    void DB() throws SQLException, IOException {
-        db.connectToDB();
+    void DB() throws SQLException, IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        //db.connectToDB();
+        //db.createDB();
+        //initSQLServer.initSQLServer();
+        //create();
+        crtDb.init();
     }
 }
