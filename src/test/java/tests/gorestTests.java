@@ -167,10 +167,6 @@ public class gorestTests {
 
     @Test
     void DB() throws SQLException, IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        //db.connectToDB();
-        //db.createDB();
-        //initSQLServer.initSQLServer();
-        //create();
         crtDb.init();
     }
 }
