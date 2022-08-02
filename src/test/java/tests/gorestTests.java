@@ -1,7 +1,7 @@
 package tests;
 
 import api.Specifications;
-import helpers.CreateDatabaseDemo;
+import helpers.InitDB;
 import helpers.RandomValues;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -19,19 +19,15 @@ import static org.hamcrest.Matchers.notNullValue;
 public class gorestTests {
     private final static String URL = "https://gorest.co.in";
     private final static String token = "a9e5f1e7c2b7ddc3308af58fa9c251e2fb38809ee71d26e37b780419acae502e";
-    //protected String userId = "";
 
     RandomValues randomValues = new RandomValues();
-    //ConnectToDB db = new ConnectToDB();
-
-
-    CreateDatabaseDemo crtDb = new CreateDatabaseDemo();
-    //DB dbb = new DB();
+    InitDB crtDb = new InitDB();
 
     protected String randName = randomValues.randomName();
     protected String randGender = randomValues.randomGender();
     protected String randEmail = randomValues.randomEmail();
     protected String randStatus = randomValues.randomStatus();
+
     @BeforeEach
     void before(){
         Specifications.installSpecification(Specifications.requestSpec(URL),Specifications.responseSpec200());

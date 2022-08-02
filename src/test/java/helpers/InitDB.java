@@ -3,14 +3,14 @@ package helpers;
 
 import java.sql.*;
 
-public class CreateDatabaseDemo {
+public class InitDB {
     public static final String DRIVER = "com.mysql.jdbc.Driver";
     Connection con = null;
     Statement stmt = null;
 
     String userName = "root";
     String password = "tesvan123###";
-    String yourDatabaseName = "Rest_Assured_DB_Gorest3 ";
+    String yourDatabaseName = "Rest_Assured_GorestDB";
     public  void initJDBC(){
         //Register JDBC
         try {
@@ -39,7 +39,7 @@ public class CreateDatabaseDemo {
         this.connectDB(url);
         try{
             stmt = con.createStatement();
-            int status = stmt.executeUpdate("CREATE DATABASE " + yourDatabaseName);
+            int status = stmt.executeUpdate("CREATE DATABASE if not exists " + yourDatabaseName);
             if (status > 0) {
                 System.out.println("Database is created successfully !!!");
             }
@@ -50,7 +50,7 @@ public class CreateDatabaseDemo {
     //--------------------------------------------------------------------
     public void createTable() {
         //Create Table
-        String url = "jdbc:mysql://localhost:3306/Rest_Assured_DB_Gorest3";//I can't use variable in url path
+        String url = "jdbc:mysql://localhost:3306/Rest_Assured_GorestDB";//I can't use variable in url path
         this.initJDBC();
         this.connectDB(url);
         try {
@@ -68,13 +68,6 @@ public class CreateDatabaseDemo {
         } catch (SQLException e) {
             System.out.println("Table cannot be created!");
             return;
-//        } finally {
-//            try {
-//                if (stmt != null) con.close();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-
         }
     }
 
