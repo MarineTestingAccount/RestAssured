@@ -1,14 +1,14 @@
 package tests;
 
 import api.Specifications;
-import helpers.*;
+import helpers.CreateDatabaseDemo;
+import helpers.RandomValues;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,26 +19,27 @@ import static org.hamcrest.Matchers.notNullValue;
 public class gorestTests {
     private final static String URL = "https://gorest.co.in";
     private final static String token = "a9e5f1e7c2b7ddc3308af58fa9c251e2fb38809ee71d26e37b780419acae502e";
-    protected String userId = "";
+    //protected String userId = "";
 
     RandomValues randomValues = new RandomValues();
-    ConnectToDB db = new ConnectToDB();
-    InitSQLServer initSQLServer = new InitSQLServer();
+    //ConnectToDB db = new ConnectToDB();
+
 
     CreateDatabaseDemo crtDb = new CreateDatabaseDemo();
-    DB dbb = new DB();
+    //DB dbb = new DB();
 
     protected String randName = randomValues.randomName();
     protected String randGender = randomValues.randomGender();
     protected String randEmail = randomValues.randomEmail();
     protected String randStatus = randomValues.randomStatus();
-
-    public gorestTests() throws SQLException {
+    @BeforeEach
+    void before(){
+        Specifications.installSpecification(Specifications.requestSpec(URL),Specifications.responseSpec200());
     }
 
     @Test
     void checkAllUsers(){
-        Specifications.installSpecification(Specifications.requestSpec(URL),Specifications.responseSpec200());
+
         Response response = given()
                 .when()
                 .get("/public-api/users")
@@ -58,7 +59,7 @@ public class gorestTests {
     }
     @Test
     void getOneUser(){
-        Specifications.installSpecification(Specifications.requestSpec(URL),Specifications.responseSpec200());
+        //Specifications.installSpecification(Specifications.requestSpec(URL),Specifications.responseSpec200());
         Response response = given()
                 .urlEncodingEnabled(false)
                 .basePath("/public-api/users")
@@ -77,7 +78,8 @@ public class gorestTests {
 
     @Test
     void createNewUser(){
-        Specifications.installSpecification(Specifications.requestSpec(URL),Specifications.responseSpec(200));
+        String userId = "";
+       // Specifications.installSpecification(Specifications.requestSpec(URL),Specifications.responseSpec(200));
         Map<String, String> user = new HashMap<>();
         user.put("name",randName);
         user.put("gender",randGender);
@@ -100,7 +102,7 @@ public class gorestTests {
 
     @Test
     void createExistingNewUser(){
-        Specifications.installSpecification(Specifications.requestSpec(URL),Specifications.responseSpec(200));
+        //Specifications.installSpecification(Specifications.requestSpec(URL),Specifications.responseSpec(200));
         Map<String, String> user = new HashMap<>();
         user.put("name",randName);
         user.put("gender",randGender);
@@ -123,7 +125,8 @@ public class gorestTests {
 
     @Test
     void updateUser(){
-        Specifications.installSpecification(Specifications.requestSpec(URL),Specifications.responseSpec(200));
+        String userId = "";
+       // Specifications.installSpecification(Specifications.requestSpec(URL),Specifications.responseSpec(200));
         Map<String, String> user = new HashMap<>();
         user.replace("name",randomValues.randomName());
         user.replace("email",randomValues.randomEmail());
@@ -146,7 +149,7 @@ public class gorestTests {
 
     @Test
     void deleteUser(){
-        Specifications.installSpecification(Specifications.requestSpec(URL),Specifications.responseSpec(201));
+       // Specifications.installSpecification(Specifications.requestSpec(URL),Specifications.responseSpec(201));
         Map<String, String> user = new HashMap<>();
         user.put("name","New User5");
         user.put("gender","male");
@@ -166,7 +169,8 @@ public class gorestTests {
     }
 
     @Test
-    void DB() throws SQLException, IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        crtDb.init();
+    void DB(){
+        crtDb.createDB();
+        crtDb.createTable();
     }
 }
