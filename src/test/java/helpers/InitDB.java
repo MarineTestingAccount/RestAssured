@@ -1,10 +1,10 @@
 package helpers;
-/////////correct connection
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import static helpers.ConstData.*;
 
 public class InitDB {
@@ -12,33 +12,29 @@ public class InitDB {
     Connection con = null;
     Statement stmt = null;
 
-
-
+    //Register JDBC
     public void initJDBC() {
-        //Register JDBC
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
-            System.out.println("JDBC not registered!!");
-
+            System.out.println("JDBC cannot be registered!!");
         }
     }
 
-    //-----------------------------------------------------------
+    //Connect to the Instance
     public void connectDB(String url) {
         this.initJDBC();
         try {
-            con = DriverManager.getConnection(url, USER_NAME, PASSWORD);
-            if (con != null) System.out.println("Connected to DB!!!");
+            con = DriverManager.getConnection(url, ROOT_USER_NAME, ROOT_PASSWORD);
+            if (con != null) System.out.println("Connected to Instance!!!");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            System.out.println("Connection break!!!");
+            System.out.println("Cannot be connected to the Instance!!!");
         }
     }
-    //----------------------------------------------------------------------
 
+    //CreateDB
     public void createDB() {
-        //Create DB
         this.connectDB(LOCAL_INSTANCE_URL);
         try {
             stmt = con.createStatement();
@@ -48,13 +44,12 @@ public class InitDB {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Database cannot be created!!");
         }
     }
 
-    //--------------------------------------------------------------------
+    //Create Table
     public void createTable() {
-        //Create Table
-      // String url = ;//I can't use variable in url path
         this.initJDBC();
         this.connectDB(LOCAL_DB_URL);
         try {
@@ -74,29 +69,30 @@ public class InitDB {
 
         }
     }
-    public void insertValues(String nameV, String genderV, String emailV, String statusV){
-        String url = "jdbc:mysql://localhost:3306/Rest_Assured_GorestDB";//I can't use variable in url path
-        this.initJDBC();
-        this.connectDB(url);
 
-        String sql = " insert into users (name, gender, email, status)"
-                + " values ({nameV}, {genderV}, {emailV}, statusV)";
-
-
-        try{
-            stmt = con.createStatement();
-            int i = stmt.executeUpdate(sql);
-            if (i > 0) {
-                System.out.println("ROW INSERTED");
-            } else {
-                System.out.println("ROW NOT INSERTED");
-            }
-        }  catch (Exception e)
-        {
-            System.err.println("Got an exception!");
-            e.printStackTrace();
-        }
-
-    }
+//    //Insert values via JDBC
+//    public void insertValues(String nameV, String genderV, String emailV, String statusV) {
+//        String url = "jdbc:mysql://localhost:3306/Rest_Assured_GorestDB";//I can't use variable in url path
+//        this.initJDBC();
+//        this.connectDB(url);
+//
+//        String sql = " insert into users (name, gender, email, status)"
+//                + " values (?,?,?,?)";
+//
+//
+//        try {
+//            stmt = con.createStatement();
+//            int i = stmt.executeUpdate(sql);
+//            if (i > 0) {
+//                System.out.println("ROW INSERTED");
+//            } else {
+//                System.out.println("ROW NOT INSERTED");
+//            }
+//        } catch (Exception e) {
+//            System.err.println("Got an exception!");
+//            e.printStackTrace();
+//        }
+//
+//    }
 
 }

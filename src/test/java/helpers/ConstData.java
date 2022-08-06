@@ -7,10 +7,10 @@ public class ConstData {
 
     public static final String DRIVER = "com.mysql.jdbc.Driver";
     public static final String LOCAL_INSTANCE_URL = "jdbc:mysql://localhost:3306";
-    public static final String LOCAL_DB_URL = "jdbc:mysql://localhost:3306/Rest_Assured_GorestDB";
-    public static final String LOCAL_TABLE_URL="jdbc:mysql://localhost:3306/Rest_Assured_GorestDB/users";
+    public static final String LOCAL_DB_URL = "/Rest_Assured_GorestDB";
+    public static final String LOCAL_TABLE_URL = "/users";
 
-    public static final String USER_NAME = "root";
-    public static final String PASSWORD = "tesvan123###";
+    public static final String ROOT_USER_NAME = "root";
+    public static final String ROOT_PASSWORD = "tesvan123###";
     public static final String LOCAL_DB_NAME = "Rest_Assured_GorestDB";
 }
