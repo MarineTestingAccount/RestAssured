@@ -43,7 +43,7 @@ public class Root {
     @Override
     public String toString()
     {
-        return "firstPojo [meta=" + meta + ", data=" + data + "]";
+        return "rootPojo [code =" + code+", meta=" + meta + ", data=" + data + "]";
     }
 }
 
