@@ -6,9 +6,7 @@ import com.google.gson.Gson;
 import helpers.RandomDataGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import pojo.Data;
-import pojo.DeleteResponseRoot;
-import pojo.Root;
+import pojo.*;
 
 import static helpers.ConstData.*;
 import static io.restassured.RestAssured.given;
@@ -55,6 +53,52 @@ public class gorestTests {
         Assertions.assertEquals(requestUser.getStatus(),responseUser.getData().get(0).getStatus());
 
     }
+
+    @Test
+    void createUser422(){
+        Specifications.installSpecification(Specifications.requestSpec(BASE_URL));
+
+        RandomDataGenerator randomValues = new RandomDataGenerator();
+        String randName = "";
+        String randGender = randomValues.randomGender();
+        String randEmail = randomValues.randomEmail();
+        String randStatus = randomValues.randomStatus();
+
+        Data requestUser = new Data(randName,randGender,randEmail,randStatus);
+        String body = new Gson().toJson(requestUser);
+        CreateResponseRoot responseUser = given()
+                .auth()
+                .oauth2(ACCESS_TOKEN)
+                .body(body)
+                .when()
+                .post(BASE_URL_PATH)
+                .then().log().all()
+                .extract().body().as(CreateResponseRoot.class);
+        Assertions.assertEquals(422,responseUser.getCode());
+    }
+
+    @Test
+    void createUser401(){
+        Specifications.installSpecification(Specifications.requestSpec(BASE_URL));
+
+        RandomDataGenerator randomValues = new RandomDataGenerator();
+        String randName = "";
+        String randGender = randomValues.randomGender();
+        String randEmail = randomValues.randomEmail();
+        String randStatus = randomValues.randomStatus();
+
+        Data requestUser = new Data(randName,randGender,randEmail,randStatus);
+        String body = new Gson().toJson(requestUser);
+        DeleteResponseRoot responseUser = given()
+                .auth()
+                .oauth2(ACCESS_TOKEN+1)
+                .body(body)
+                .when()
+                .post(BASE_URL_PATH)
+                .then().log().all()
+                .extract().body().as(DeleteResponseRoot.class);
+        Assertions.assertEquals(401,responseUser.getCode());
+    }
     @Test
     public void putUserData() {
         Specifications.installSpecification(Specifications.requestSpec(BASE_URL));
@@ -84,6 +128,8 @@ public class gorestTests {
         Assertions.assertEquals(requestUser.getStatus(), responseUser.getData().get(0).getStatus());
     }
 
+
+
     @Test
     public void patchUserData() {
         Specifications.installSpecification(Specifications.requestSpec(BASE_URL));
@@ -108,8 +154,6 @@ public class gorestTests {
         Assertions.assertEquals(200, responseUser.getCode());
         Assertions.assertNotNull(responseUser.getData().get(0).getId());
     }
-
-
 
             @Test
             public void deleteUserData () {
