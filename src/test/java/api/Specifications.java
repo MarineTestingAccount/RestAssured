@@ -15,21 +15,31 @@ public class Specifications {
                 .build();
     }
 
-    public static ResponseSpecification responseSpec200() {
+    public static ResponseSpecification responseSpec(int statusCode) {
         return new ResponseSpecBuilder()
-                .expectStatusCode(200)
+                .expectStatusCode(statusCode)
                 .build();
     }
+//
+//    public static ResponseSpecification responseSpec201() {
+//        return new ResponseSpecBuilder()
+//                .expectStatusCode(201)
+//                .build();
+//    }
+//    public static ResponseSpecification responseSpec400() {
+//        return new ResponseSpecBuilder()
+//                .expectStatusCode(400)
+//                .build();
+//    }
+//    public static ResponseSpecification responseSpec(int status) {
+//        return new ResponseSpecBuilder()
+//                .expectStatusCode(status)
+//                .build();
+//    }
 
-    public static ResponseSpecification responseSpec(int status) {
-        return new ResponseSpecBuilder()
-                .expectStatusCode(status)
-                .build();
-    }
-
-    public static void installSpecification(RequestSpecification request, ResponseSpecification response) {
+    public static void installSpecification(RequestSpecification request) {
         RestAssured.requestSpecification = request;
-        RestAssured.responseSpecification = response;
+        //RestAssured.responseSpecification = response;
     }
 
 ////template

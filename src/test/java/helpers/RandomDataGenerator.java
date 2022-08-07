@@ -1,6 +1,6 @@
 package helpers;
 
-public class RandomValues {
+public class RandomDataGenerator {
     public long currentDateTime() {
         return System.currentTimeMillis();
     }
@@ -20,5 +20,5 @@ public class RandomValues {
     public String randomStatus() {
         return currentDateTime() % 2 == 0 ? "active" : "inactive";
     }
-}
 
+}
