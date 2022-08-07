@@ -1,13 +1,13 @@
 package pojo;
 
-public class DeleteResponseRoot {
+public class ResponseRoot {
     private Integer code;
     private Object meta;
-    private DeleteResponseData data;
+    private ResponseData data;
 
-    public DeleteResponseRoot(){};
+    public ResponseRoot(){};
 
-    public DeleteResponseRoot(Integer code, Object meta, DeleteResponseData data) {
+    public ResponseRoot(Integer code, Object meta, ResponseData data) {
         this.code = code;
         this.meta = meta;
         this.data = data;
@@ -21,7 +21,7 @@ public class DeleteResponseRoot {
         return meta;
     }
 
-    public DeleteResponseData getData() {
+    public ResponseData getData() {
         return data;
     }
 }

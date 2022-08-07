@@ -1,10 +1,10 @@
 package pojo;
 
-public class DeleteResponseData {
+public class ResponseData {
     private String message;
 
-    public DeleteResponseData(){};
-    public DeleteResponseData(String message) {
+    public ResponseData(){};
+    public ResponseData(String message) {
         this.message = message;
     }
 
