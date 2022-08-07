@@ -108,12 +108,57 @@ public class RequestMethods {
                 .auth()
                 .oauth2(ACCESS_TOKEN)
                 .body(body)
-                .pathParam("id", "4366")
+                .pathParam("id", "4461")
                 .when()
                 .put(BASE_URL_PATH + "/{id}")
                 .then().log().all()
                 .extract().body().as(Root.class);
         return responseUser;
+    }
+
+    public Root patchRequest(){
+        RandomDataGenerator randomValues = new RandomDataGenerator();
+        String randStatus = randomValues.randomStatus();
+        Data requestUser = new Data(randStatus);
+        String body = new Gson().toJson(requestUser);
+
+        Root responseUser = given()
+                .auth()
+                .oauth2(ACCESS_TOKEN)
+                .body(body)
+                .pathParam("id", "4461")
+                .when()
+                .patch(BASE_URL_PATH + "/{id}")
+                .then().log().all()
+                .extract().body().as(Root.class);
+        return responseUser;
+    }
+
+    public ResponseRoot deleteExistingUser(){
+        ResponseRoot responseDeleteUser = given()
+                .auth()
+                .oauth2(ACCESS_TOKEN)
+                .pathParam("id", "4461")
+                // WHEN
+                .when()
+                .delete(BASE_URL_PATH + "/{id}")
+                // THEN
+                .then().log().all()
+                .extract().body().as(ResponseRoot.class);
+        return responseDeleteUser;
+    }
+    public ResponseRoot checkDeletedUser(){
+        ResponseRoot responseDeletedUser = given()
+                .auth()
+                .oauth2(ACCESS_TOKEN)
+                .pathParam("id", "3522")
+                // WHEN
+                .when()
+                .delete(BASE_URL_PATH + "/{id}")
+                // THEN
+                .then().log().all()
+                .extract().body().as(ResponseRoot.class);
+        return responseDeletedUser;
     }
 
 }
