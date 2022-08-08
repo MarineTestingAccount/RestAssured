@@ -34,13 +34,13 @@ public class gorestTests {
     @Test
     void createUser() {
         Root responseUser = request.createNewUser201();
-        int id
+        int idV = responseUser.getData().get(0).getId();
         String nameV = responseUser.getData().get(0).getName();
         String genderV = responseUser.getData().get(0).getGender();
         String emailV = responseUser.getData().get(0).getEmail();
         String statusV = responseUser.getData().get(0).getStatus();
         System.out.println(nameV + genderV + emailV + statusV);
-        initDB.insertValues(nameV,genderV, emailV, statusV);
+        initDB.insertValues(idV, nameV,genderV, emailV, statusV);
         Assertions.assertEquals(201,responseUser.getCode());
         Assertions.assertNotNull(responseUser.getData().get(0).getId());
    }
@@ -104,12 +104,4 @@ public class gorestTests {
                 .then()
                 .statusCode(500);
     }
-
-//    @Test
-//    void dbConfig(){
-//        initDB.initJDBC();
-//        initDB.createDB();
-//        initDB.createTable();
-//    }
-
 }
