@@ -8,8 +8,7 @@ import pojo.CreateResponseRoot;
 import pojo.ResponseRoot;
 import pojo.Root;
 
-import static helpers.ConstData.BASE_URL;
-import static helpers.ConstData.DELETE_RESPONSE_MESSAGE;
+import static helpers.ConstData.*;
 import static io.restassured.RestAssured.given;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class gorestTests {
@@ -49,12 +48,13 @@ public class gorestTests {
         request.createNewUser400();
     }
 
-//@Test
-//void manyRequests429(){
-//        request.manyRequests429();
-//}
-
-
+//    @Test
+//    void tooManyRequests429(){
+//        ResponseRoot manyRequests = request.manyRequests429();
+//        Assertions.assertEquals(429, manyRequests.getCode());
+//        Assertions.assertNull(manyRequests.getMeta());
+//        Assertions.assertEquals(manyRequests.getData().getMessage(), TOO_MANY_REQUESTS);
+//    }
     @Test
     void createUser422() {
         CreateResponseRoot responseUser = request.createNewUser422();
@@ -89,7 +89,7 @@ public class gorestTests {
     }
     @Test
     public void checkDeletedUserData() {
-        ResponseRoot responseDeletedUser = request.deleteExistingUser();
+        ResponseRoot responseDeletedUser = request.checkDeletedUser();
         Assertions.assertEquals(404, responseDeletedUser.getCode());
         Assertions.assertNull(responseDeletedUser.getMeta());
         Assertions.assertEquals(responseDeletedUser.getData().getMessage(), DELETE_RESPONSE_MESSAGE);

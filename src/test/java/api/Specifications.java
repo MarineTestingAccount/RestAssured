@@ -12,8 +12,8 @@ public class Specifications {
                 .setAccept("application/json")
                 .build();
     }
+
     public static void installSpecification(RequestSpecification request) {
         RestAssured.requestSpecification = request;
     }
-
 }

@@ -50,26 +50,22 @@ public class RequestMethods {
                 .post(BASE_URL_PATH)
                 .then().log().all()
                 .statusCode(400);
-
     }
-
+// I have many questions
 //    public ResponseRoot manyRequests429() {
 //
 //        RequestMethods request = new RequestMethods();
 //        Root responseUser = request.createNewUser201();
-//        while (responseUser.getCode() != 429){
+//        while (responseUser.getCode() != 429) {
 //            request.createNewUser201();
 //        }
-//            ResponseRoot response = given()
-//                    .when()
-//                    .then();
-//                    //.extract().body().as(ResponseRoot.class);
-//
-//        Assertions.assertEquals(429, response.getCode());
-
-
-
-   // }
+//        ResponseRoot manyRequests = given()
+//                .when()
+//                .get()
+//                .then().log().all()
+//                .extract().body().as(ResponseRoot.class);
+//        return manyRequests;
+//    }
 
     public CreateResponseRoot createNewUser422(){
         RandomDataGenerator randomValues = new RandomDataGenerator();
@@ -152,13 +148,10 @@ public class RequestMethods {
                 .auth()
                 .oauth2(ACCESS_TOKEN)
                 .pathParam("id", "3522")
-                // WHEN
                 .when()
                 .delete(BASE_URL_PATH + "/{id}")
-                // THEN
                 .then().log().all()
                 .extract().body().as(ResponseRoot.class);
         return responseDeletedUser;
     }
-
 }

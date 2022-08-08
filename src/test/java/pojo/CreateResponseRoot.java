@@ -14,7 +14,6 @@ public class CreateResponseRoot {
         this.meta = meta;
         this.data = data;
     }
-
     public Integer getCode() {
         return code;
     }

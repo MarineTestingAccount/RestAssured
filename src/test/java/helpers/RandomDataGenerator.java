@@ -23,26 +23,23 @@ public class RandomDataGenerator {
         return currentDateTime() % 2 == 0 ? "active" : "inactive";
     }
 
-    public Data setRandomData(){
+    public Data setRandomData() {
         String randName = this.randomName();
         String randGender = this.randomGender();
         String randEmail = this.randomEmail();
         String randStatus = this.randomStatus();
 
-        Data requestUser = new Data(randName,randGender,randEmail,randStatus);
+        Data requestUser = new Data(randName, randGender, randEmail, randStatus);
         return requestUser;
     }
 
-    public Data setRandomDataWithEmptyName(){
+    public Data setRandomDataWithEmptyName() {
         String randName = "";
         String randGender = this.randomGender();
         String randEmail = this.randomEmail();
         String randStatus = this.randomStatus();
 
-        Data requestUser = new Data(randName,randGender,randEmail,randStatus);
+        Data requestUser = new Data(randName, randGender, randEmail, randStatus);
         return requestUser;
     }
-
-
-
 }

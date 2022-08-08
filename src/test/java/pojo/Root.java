@@ -10,7 +10,11 @@ public class Root {
     private Meta meta;
     private List<Data> data;
 
-    public Root(){};
+    public Root() {
+    }
+
+    ;
+
     public Root(Integer code, Meta meta, ArrayList<Data> data) {
         this.code = code;
         this.meta = meta;
@@ -34,16 +38,15 @@ public class Root {
     }
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-    public void setData(List<Data> data)
-    {
+    public void setData(List<Data> data) {
 
         this.data = data;
     }
 
     @Override
-    public String toString()
-    {
-        return "rootPojo [code =" + code+", meta=" + meta + ", data=" + data + "]";
+    public String toString() {
+        return "rootPojo [code =" + code + ", meta=" + meta + ", data=" + data + "]";
     }
 }
+
 
