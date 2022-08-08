@@ -1,19 +1,25 @@
 package tests;
 
 import api.Specifications;
+import helpers.InitDB;
 import helpers.RequestMethods;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import pojo.CreateResponseRoot;
 import pojo.ResponseRoot;
 import pojo.Root;
 
-import static helpers.ConstData.*;
+import static helpers.ConstData.BASE_URL;
+import static helpers.ConstData.DELETE_RESPONSE_MESSAGE;
 import static io.restassured.RestAssured.given;
-
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class gorestTests {
     RequestMethods request = new RequestMethods();
+    InitDB initDB = new InitDB();
+
+    @BeforeAll
+    public void setInitDB(){
+        initDB.dbConfig();
+    }
     @BeforeEach
     public void spec() {
         Specifications.installSpecification(Specifications.requestSpec(BASE_URL));
@@ -28,6 +34,13 @@ public class gorestTests {
     @Test
     void createUser() {
         Root responseUser = request.createNewUser201();
+        int id
+        String nameV = responseUser.getData().get(0).getName();
+        String genderV = responseUser.getData().get(0).getGender();
+        String emailV = responseUser.getData().get(0).getEmail();
+        String statusV = responseUser.getData().get(0).getStatus();
+        System.out.println(nameV + genderV + emailV + statusV);
+        initDB.insertValues(nameV,genderV, emailV, statusV);
         Assertions.assertEquals(201,responseUser.getCode());
         Assertions.assertNotNull(responseUser.getData().get(0).getId());
    }
@@ -91,4 +104,12 @@ public class gorestTests {
                 .then()
                 .statusCode(500);
     }
+
+//    @Test
+//    void dbConfig(){
+//        initDB.initJDBC();
+//        initDB.createDB();
+//        initDB.createTable();
+//    }
+
 }

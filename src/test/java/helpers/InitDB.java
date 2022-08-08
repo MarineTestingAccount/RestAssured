@@ -8,11 +8,11 @@ import java.sql.Statement;
 import static helpers.ConstData.*;
 
 public class InitDB {
-        Connection con = null;
-        Statement stmt = null;
+        static Connection con = null;
+        static Statement stmt = null;
 
         //Register JDBC
-        public void initJDBC() {
+        public static void initJDBC() {
             try {
                 Class.forName(DRIVER);
             } catch (ClassNotFoundException e) {
@@ -21,20 +21,20 @@ public class InitDB {
         }
 
         //Connect to the Instance
-        public void connectDB(String url) {
-            this.initJDBC();
+        public static void connectDB(String url) {
+            initJDBC();
             try {
                 con = DriverManager.getConnection(url, ROOT_USER_NAME, ROOT_PASSWORD);
                 if (con != null) System.out.println("Connected to Instance!!!");
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
                 System.out.println("Cannot be connected to the Instance!!!");
             }
         }
 
         //CreateDB
-        public void createDB() {
-            this.connectDB(LOCAL_INSTANCE_URL);
+        public static void createDB() {
+            connectDB(LOCAL_INSTANCE_URL);
             try {
                 stmt = con.createStatement();
                 int status = stmt.executeUpdate("CREATE DATABASE if not exists " + LOCAL_DB_NAME);
@@ -48,13 +48,13 @@ public class InitDB {
         }
 
         //Create Table
-        public void createTable() {
-            this.initJDBC();
-            this.connectDB(LOCAL_DB_URL);
+        public static void createTable() {
+            initJDBC();
+            connectDB(LOCAL_INSTANCE_URL + LOCAL_DB_URL);
             try {
                 stmt = con.createStatement();
                 String query = "CREATE TABLE if not exists users(" +
-                        "id INTEGER not null AUTO_INCREMENT," +
+                        "id INTEGER not null," +
                         "name VARCHAR(255)," +
                         "gender VARCHAR(255)," +
                         "email VARCHAR(255)," +
@@ -69,30 +69,35 @@ public class InitDB {
             }
         }
 
-//    //Insert values via JDBC
-//    public void insertValues(String nameV, String genderV, String emailV, String statusV) {
-//        String url = "jdbc:mysql://localhost:3306/Rest_Assured_GorestDB";//I can't use variable in url path
+    //Insert values via JDBC
+    public void insertValues(int idVal, String nameVal, String genderVal, String emailVal, String statusVal) {
+//        String url = LOCAL_INSTANCE_URL + LOCAL_DB_URL;
 //        this.initJDBC();
 //        this.connectDB(url);
-//
-//        String sql = " insert into users (name, gender, email, status)"
-//                + " values (?,?,?,?)";
-//
-//
-//        try {
-//            stmt = con.createStatement();
-//            int i = stmt.executeUpdate(sql);
-//            if (i > 0) {
-//                System.out.println("ROW INSERTED");
-//            } else {
-//                System.out.println("ROW NOT INSERTED");
-//            }
-//        } catch (Exception e) {
-//            System.err.println("Got an exception!");
-//            e.printStackTrace();
-//        }
-//
-//    }
+
+        String sql = " insert into users (id, name, gender, email, status)"
+                + " values (idVal, {nameVal}, {genderVal}, {emailVal}, {statusVal})";
+
+
+        try {
+            stmt = con.createStatement();
+            int i = stmt.executeUpdate(sql);
+            if (i > 0) {
+                System.out.println("ROW INSERTED");
+            } else {
+                System.out.println("ROW NOT INSERTED");
+            }
+        } catch (Exception e) {
+            System.err.println("Got an exception!");
+            e.printStackTrace();
+        }
+
+    }
+    public void dbConfig(){
+        initJDBC();
+        createDB();
+        createTable();
+    }
 
     }
 
